@@ -353,11 +353,10 @@ export const WritingStage: React.FC<WritingStageProps> = ({
     }
   };
 
-  // Generate 65-deg slant lines across totalWidth
+  // Generate 65-deg slant lines across full visible paper width
   const slantLines = useMemo(() => {
     const lines: Array<{ x1: number; y1: number; x2: number; y2: number }> = [];
-    // tan(25deg) ~ 0.466 -> across height 96, dx ~ 44
-    for (let x = -20; x < sequence.totalWidth + 50; x += 26) {
+    for (let x = -220; x < sequence.totalWidth + 240; x += 26) {
       lines.push({ x1: x + 36, y1: 6, x2: x, y2: 96 });
     }
     return lines;
@@ -478,7 +477,7 @@ export const WritingStage: React.FC<WritingStageProps> = ({
           )}
         </div>
 
-        <div className="w-full overflow-x-auto">
+        <div className="w-full">
           <svg
             ref={svgRef}
             viewBox={sequence.viewBox}
@@ -487,10 +486,7 @@ export const WritingStage: React.FC<WritingStageProps> = ({
             onPointerMove={handlePointerMove}
             onPointerUp={finishDrawingStroke}
             onPointerCancel={finishDrawingStroke}
-            className="writing-surface w-full h-[300px] sm:h-[360px] lg:h-[400px] mx-auto cursor-crosshair rounded-lg border-2 border-slate-200 bg-white shadow-lg"
-            style={{
-              minWidth: sequence.totalWidth > 320 ? `${Math.min(900, sequence.totalWidth * 1.9)}px` : undefined,
-            }}
+            className="writing-surface w-full h-[280px] sm:h-[340px] lg:h-[390px] mx-auto cursor-crosshair rounded-lg border-2 border-slate-200 bg-white shadow-lg"
             aria-label={`Area di scrittura interattiva per ${sequence.text}`}
           >
             <defs>
@@ -537,9 +533,9 @@ export const WritingStage: React.FC<WritingStageProps> = ({
 
                 {/* Ascender line (y=18) */}
                 <line
-                  x1={0}
+                  x1={-400}
                   y1={18}
-                  x2={sequence.totalWidth}
+                  x2={sequence.totalWidth + 400}
                   y2={18}
                   stroke="#94A3B8"
                   strokeOpacity={0.65}
@@ -548,9 +544,9 @@ export const WritingStage: React.FC<WritingStageProps> = ({
                 />
                 {/* X-Height corridor (y=42) */}
                 <line
-                  x1={0}
+                  x1={-400}
                   y1={42}
-                  x2={sequence.totalWidth}
+                  x2={sequence.totalWidth + 400}
                   y2={42}
                   stroke="#64748B"
                   strokeOpacity={0.65}
@@ -558,9 +554,9 @@ export const WritingStage: React.FC<WritingStageProps> = ({
                 />
                 {/* Baseline (y=72) */}
                 <line
-                  x1={0}
+                  x1={-400}
                   y1={72}
-                  x2={sequence.totalWidth}
+                  x2={sequence.totalWidth + 400}
                   y2={72}
                   stroke="#334155"
                   strokeOpacity={0.8}
@@ -568,9 +564,9 @@ export const WritingStage: React.FC<WritingStageProps> = ({
                 />
                 {/* Descender line (y=92) */}
                 <line
-                  x1={0}
+                  x1={-400}
                   y1={92}
-                  x2={sequence.totalWidth}
+                  x2={sequence.totalWidth + 400}
                   y2={92}
                   stroke="#94A3B8"
                   strokeOpacity={0.65}

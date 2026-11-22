@@ -119,12 +119,13 @@ export function composeWordStrokes(text: string, style: ScriptStyle): ComposedSe
     }
 
     // In corsivo lowercase, tighten inter-character spacing slightly so connections feel natural
+    // In stampatello, compensate for each glyph's built-in ~12px side bearings for natural print kerning
     const isUpper = ch === ch.toUpperCase() && ch !== ch.toLowerCase();
     if (idx > 0 && prevExitGlobal && style === 'corsivo') {
       const kerningAdjust = isUpper ? 2 : -4;
       cursorX += kerningAdjust;
     } else if (idx > 0 && style === 'stampatello') {
-      cursorX += 2;
+      cursorX += isUpper ? -4 : -8;
     }
 
     const glyphX = cursorX;
